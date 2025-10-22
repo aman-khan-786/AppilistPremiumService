@@ -19,14 +19,21 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        api-level: 33
+        build-tools: 33.0.0
+        ndk: 'none'  # Agar NDK nahi chahiye
+
+    - name: Accept Android SDK licenses
+      run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
-    - name: Accept Android SDK licenses
-      run: yes | sdkmanager --licenses
 
     - name: Build with Gradle
       run: ./gradlew assembleDebug
