@@ -22,28 +22,28 @@ jobs:
         java-version: '17'
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3 # Updated to latest version
+      uses: android-actions/setup-android@v3
       with:
         api-level: 33
         build-tools: 33.0.0
         ndk: 'none'
-        sdkmanager-args: "--verbose" # For better logging
+        sdkmanager-args: "--verbose"
 
     - name: Accept Android SDK licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4 # Updated to latest version
+      uses: gradle/actions/setup-gradle@v4
       with:
-        gradle-version: '8.10' # Specify latest Gradle version
+        gradle-version: '8.10'
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Build with Gradle (Override JVM args)
-      run: ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx3072m -Xms1024m" --stacktrace --info
+      run: ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx4096m -Xms1024m" --stacktrace --info
       env:
-        TERM: xterm # Fix potential terminal issues
+        TERM: xterm
 
     - name: Upload APK Artifact
       if: success()
@@ -51,7 +51,7 @@ jobs:
       with:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
-        retention-days: 7 # Keep artifact for 7 days
+        retention-days: 7
 
     - name: Notify on Failure
       if: failure()
