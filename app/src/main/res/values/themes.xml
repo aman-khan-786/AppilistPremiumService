@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme using Material Design 3 -->
+    <style name="Theme.AppilistPremiumService" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- Window background -->
+        <item name="android:windowBackground">@color/background</item>
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/white</item>
+        <!-- Status bar icons -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>
