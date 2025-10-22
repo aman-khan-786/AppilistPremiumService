@@ -24,7 +24,7 @@ jobs:
       with:
         api-level: 33
         build-tools: 33.0.0
-        ndk: 'none'  # Agar NDK nahi chahiye
+        ndk: 'none'
 
     - name: Accept Android SDK licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
@@ -35,8 +35,8 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew assembleDebug
+    - name: Build with Gradle (Override JVM args)
+      run: ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx2048m -Xms512m"
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
