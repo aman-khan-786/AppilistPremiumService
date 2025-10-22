@@ -13,14 +13,14 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-        multiDexEnabled true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true // Corrected syntax
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -31,8 +31,8 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs += "-Xjvm-default=all" // For Compose
-        freeCompilerArgs += "-Xsuppress-kotlin-version-compatibility-check" // Avoid version warnings
+        // Yeh line Compose ke liye zaroori nahi hai jab tak aapko specific interface default methods na chahiye hon
+        // freeCompilerArgs += "-Xjvm-default=all" 
     }
 
     buildFeatures {
@@ -45,7 +45,7 @@ android {
 
     packaging {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
@@ -64,7 +64,8 @@ dependencies {
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.0")
-    implementation("androidx.work:work-runtime:2.9.0")
+    // Note: work-runtime-ktx already includes work-runtime, so you might not need the second line
+    // implementation("androidx.work:work-runtime:2.9.0") 
     implementation("androidx.work:work-multiprocess:2.9.0")
 
     // Lifecycle
@@ -83,3 +84,13 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 }
+
+// === YEH BLOCK ZAROOR HATA DEIN AGAR AAPKI FILE MEIN HAI ===
+// Agar aapki file mein is tarah ka koi block neeche hai, to use DELETE kar dein.
+/*
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+}
+*/
